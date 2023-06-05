@@ -32,9 +32,9 @@ function AddToDo({ mutate }: { mutate: KeyedMutator<Todo[]> }) {
         <>
             <Modal opened={open} onClose={() => setOpen(false)} title="Create todo">
                 <form onSubmit={form.onSubmit(createToDo)}>
-                    <TextInput required mb={12} label="Todo" placeholder="What do you want to do?" {...form.getInputProps("title")} />
-                    <Textarea mb={12} label="Body" placeholder="Tell me more..." {...form.getInputProps("body")} />
-                    <Button type="submit">Create todo</Button>
+                    <TextInput required mb={12} label="Task" placeholder="What do you want to do?" {...form.getInputProps("title")} />
+                    <Textarea mb={12} label="Description" placeholder="Tell me more..." {...form.getInputProps("body")} />
+                    <Button type="submit">Create task</Button>
                 </form>
             </Modal>
 
