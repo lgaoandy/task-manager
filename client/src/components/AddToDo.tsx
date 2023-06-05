@@ -1,8 +1,10 @@
 import { useState } from "react"
 import { useForm } from "@mantine/form"
-import { Button, Modal, Group, TextInput, Textarea } from "@mantine/core"
+import { Button as MantineButton, Modal, Group, TextInput, Textarea } from "@mantine/core"
+import styled from "@emotion/styled"
 import { ENDPOINT, Todo } from "../App"
 import { KeyedMutator } from "swr"
+import { DateInput } from "@mantine/dates"
 
 function AddToDo({ mutate }: { mutate: KeyedMutator<Todo[]> }) {
     const [open, setOpen] = useState(false)
@@ -32,19 +34,34 @@ function AddToDo({ mutate }: { mutate: KeyedMutator<Todo[]> }) {
         <>
             <Modal opened={open} onClose={() => setOpen(false)} title="Create todo">
                 <form onSubmit={form.onSubmit(createToDo)}>
-                    <TextInput required mb={12} label="Task" placeholder="What do you want to do?" {...form.getInputProps("title")} />
-                    <Textarea mb={12} label="Description" placeholder="Tell me more..." {...form.getInputProps("body")} />
+                    <TextInput required mb={12} label="Task name" placeholder="What do you want to do?" {...form.getInputProps("title")} />
+                    <Textarea mb={12} label="Task description" placeholder="Tell me more..." {...form.getInputProps("body")} />
+                    <DateInput mb={24} valueFormat="dddd, MMM D" label="Date" />
                     <Button type="submit">Create task</Button>
                 </form>
             </Modal>
 
             <Group position="center">
                 <Button fullWidth mb={12} onClick={() => setOpen(true)}>
-                    ADD TODO
+                    NEW TASK
                 </Button>
             </Group>
         </>
     )
 }
+
+const Button = styled(MantineButton)`
+    background: white;
+    border: 1px dashed #bfbfbf;
+    color: #595959;
+    transition: all 200ms ease;
+
+    &:hover {
+        background: #adc6ff;
+        border-color: white;
+        color: white;
+        scale: 1.02;
+    }
+`
 
 export default AddToDo
