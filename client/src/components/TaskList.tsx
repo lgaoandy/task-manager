@@ -1,10 +1,11 @@
 import { ENDPOINT, Todo } from '../App'
-import { ActionIcon, List, ThemeIcon } from '@mantine/core'
+import { ActionIcon } from '@mantine/core'
 import { KeyedMutator } from 'swr'
 import styled from '@emotion/styled'
 import classNames from 'classnames'
-import { CheckCircleFillIcon } from '@primer/octicons-react'
 import { MdModeEdit } from "react-icons/md"
+import { BiTimeFive, BiCheck } from "react-icons/bi"
+import { GiCheckMark } from "react-icons/gi"
 
 function TastList({ mutate, data }: { mutate: KeyedMutator<Todo[]>, data: Todo[] }) {
     async function markTodoAsDone(id: number) {
@@ -15,76 +16,127 @@ function TastList({ mutate, data }: { mutate: KeyedMutator<Todo[]>, data: Todo[]
     }
 
     return (
-        <List spacing="xs" size="sm" mb={12} center>
+        <List>
             {data?.map((todo: Todo) => {
                 return <ListItem>
-                    <Flex>
-                        <Time>11:15 AM</Time>
+                    <Checkbox>
+                        <Checkmark />
+                    </Checkbox>
+                    <Container>
+                        <TimeBlock>
+                            <BiTimeFive /><Time>11:15 AM</Time>
+                        </TimeBlock>
                         <Task
                             className={classNames({ done: todo.done })}
                             onClick={() => markTodoAsDone(todo.id)}
-                            key={`todo__${todo.id}`} icon={(
-                                <ThemeIcon color={todo.done ? "teal" : "gray"} size="24" radius="xl">
-                                    <CheckCircleFillIcon size={20} />
-                                </ThemeIcon>)
-                            }>
+                            key={`todo__${todo.id}`}>
                             <Title>{todo.title}</Title>
                             {todo.body && <Description>{todo.body}</Description>}
                         </Task>
-                        <ActionIcon variant="subtle" color="cyan">
-                            <MdModeEdit />
-                        </ActionIcon>
-                    </Flex>
+                    </Container>
+                    <ActionIcon variant="subtle" color="blue">
+                        <MdModeEdit />
+                    </ActionIcon>
                 </ListItem>
             })}
-        </List>
+        </List >
     )
 }
 
-const Time = styled.div`
-    min-width: 70px;
-    color: gray;
+const List = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 16px;
+    font-family: "Open Sans", -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
 `
 
-const Flex = styled.div`
+const ListItem = styled.div`
     display: flex;
     width: 100%;
-    align-items: center;
     gap: 5px;
 `
 
+const Checkbox = styled.div`
+    border: 2px solid #bdbdbd;
+    border-radius: 100%;
+    margin-top: 26px;
+    margin-right: 8px;
+    min-width: 16px;
+    min-height: 16px;
+    align-self: flex-start;
+    position: relative;
+    transition: border-color 150ms ease, background 250ms ease;
+    cursor: pointer;
+
+    &:hover {
+        border-color: #73d13d;
+        background: #95de64;
+    }
+
+    &.done {
+        border-color: #52c41a;
+    }
+`
+
+const Checkmark = styled(BiCheck)`
+    position: absolute;
+    font-size: 32px;
+    top: -11px;
+    left: -5px;
+    color: #73d13d;
+`
+
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+`
+
+const TimeBlock = styled.div`
+    display: flex;
+    margin-left: 14px;
+    margin-bottom: 2px;
+    gap: 4px;
+    color: gray;
+`
+
+const Time = styled.div`
+    min-width: 70px;
+    font-size: 11px;
+`
+
 const Task = styled.div`
-    background: #ededed;
-    padding: 6px 10px;
-    border-radius: 12px;
+    background: #f8f8f8;
+    padding: 6px 14px 8px 14px;
+    border-radius: 6px;
     transition: background 200ms ease, scale 100ms ease;
     cursor: pointer;
-    width: 100%;
 
     &:hover {
         scale: 1.02;
     }
 
     &.done {
-        background: #aeebd0;
+        background: #d9f7be;
     }
 `
 
-const ListItem = styled(List.Item)`
-    display: flex;
-    width: 100%;
-    align-items: center;
-    gap: 5px;
-`
-
-const Title = styled.div`
-
+const Title = styled.h4`
+    font-size: 15px;
+    font-weight: 400;
+    margin: 0;
 `
 
 const Description = styled.div`
-    margin-top: 4px;
-    font-size: 11px;
-    color: gray;
+    padding-top: 2px;
+    font-family: "Open Sans Light";
+    font-size: 13px;
+    color: #757a94;
+
+    &:hover {
+        color: #818cc7;
+    }
 `
 
 export default TastList

@@ -37,7 +37,7 @@ function AddToDo({ mutate }: { mutate: KeyedMutator<Todo[]> }) {
                     <TextInput required mb={12} label="Task name" placeholder="What do you want to do?" {...form.getInputProps("title")} />
                     <Textarea mb={12} label="Task description" placeholder="Tell me more..." {...form.getInputProps("body")} />
                     <DateInput mb={24} valueFormat="dddd, MMM D" label="Date" />
-                    <Button type="submit">Create task</Button>
+                    <Button type="submit">CREATE TASK</Button>
                 </form>
             </Modal>
 
